@@ -114,6 +114,6 @@ def sending_twilio(recipient_name,recipient_phone,sender_name,sender_phone,messa
 
 if __name__ == '__main__':
     PORT = int(os.environ.get("PORT",5000))    
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=PORT)
     
 
