@@ -1,0 +1,29 @@
+
+@font-face {
+    font-family: 'milkshakeregular';
+    src: url('milkshake-webfont.woff2') format('woff2'),
+         url('milkshake-webfont.woff') format('woff');     
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1#preview-image {
+    font-family:milkshakeregular,'Cookie',Georgia;
+    text-align:left;
+    font-style:normal,cursive;
+
+}
+.jumbotron {
+    text-indent:25px;
+}
+"color:rgb(255,0,0);font-family:'milkshakeregular',Cookie','Arial';font-style:normal,cursive;font-size:"+ size +"px;text-align:left;"
+/*#styling {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+
+}*/

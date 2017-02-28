@@ -1,0 +1,45 @@
+
+@font-face {
+    font-family: 'milkshakeregular';
+    src: url('milkshake-webfont.woff2') format('woff2'),
+         url('milkshake-webfont.woff') format('woff');     
+    font-weight: normal;
+    font-style: normal;
+}
+
+#preview-image  {
+    font-family: 'milkshakeregular', normal;
+  
+}
+
+body { 
+
+
+  height:100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#full {
+    background: url('/static/symphony.png') no-repeat center center fixed;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height:100vh;
+}
+
+
+/*#styling {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+
+}*/

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+    <div class="jumbotron well" >
+        
+        <h1>ThoughtFull</h1>
+        <h2>Fill in this form to send a ThoughtFull mms message.</h2>
+    </div>
+    
+    <div class="well" id="full" >
+        <div class="form-group">
+            <form action="/process_card" autocomplete="on" method="POST" >
+                
+                <div class="form-inline">
+                    
+                    <label>Sender Name&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    
+                    <input class="input-medium" name="sender_name" required>
+                    
+                    
+                    <label>Sender Mobile Phone Number (10 digits)&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                    
+                    <input type="number" class="input-medium bfh-phone" data-format="(ddd) ddd-dddd" name="sender_phone" required>
+                </div>
+                
+                <div class="form-inline">
+                    <label> Recipient Name</label>
+                    
+                    <input class="input-medium" name="recipient_name" required>
+                    
+                    <label>Recipient Mobile Phone Number (10 digits)</label>
+                    
+                    <input class="input-medium bfh-phone" type="number" data-format="(ddd) ddd-dddd" name="recipient_phone" required>
+                    
+                </div>
+                <label for="receipt">cc'd on note?</label>
+                <input type="radio" name="copy" value="y" > Yes
+                <input type="radio" name="copy" value="n"> No
+                <div>
+                    <label> Message (up to 5 rows, 20 characters each): </label>
+                </div>
+                <div>
+                    <textarea  data-limit-rows="true" cols="18" rows="5" wrap="hard"  name="message"></textarea>
+                </div>
+                <label> Please select a card </label>
+                <br>
+                <div class="container" >
+                    <div class="row">
+                        <div class="col-md-3">
+                            
+                            <input type="radio" name="card" value="floral"> Floral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <img src="/static/floral-fabric-background-pattern_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            
+                            <input type="radio" name="card" value="paisley"> Paisley&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/paisley_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="sorry"> Yellow Roses&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/yellow_roses_resized.png" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="marble"> Marble&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/marble_resized.jpg" height="100" width="200"></img>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="oldworld"> Old World&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/old_world_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="snow"> Winter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/snow_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="spider"> Spider Web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/spider_web_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="thanks"> Thanks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/thank_you_resized.jpg" height="100" width="200"></img>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="clover"> Lucky&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/clover_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="waves"> Waves&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/waves_resized.jpg" height="100" width="200"></img>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="dots"> Dots&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/dots_resized.png" height="100" width="200"></img>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <input type="radio" name="card" value="blues"> The Blues&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <img src="/static/blues_resized.jpg" height="100" width="200"></img>
+                        </div>
+                    </div>
+                    
+                    
+                    <br>
+                    <br>
+                    <button id="preview" type="submit" value="Check">Check it out!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <p style="text-align:right;">
+        <a href="mailto:lori.r.bard@gmail.com"><span class="glyphicon glyphicon-envelope"></span>Email Me!</a>
+        <p>
+            
+            <script>
+            $(document).ready(function () {
+            $('textarea[data-limit-rows=true]').on('keypress', function (event) {
+            var textarea = $(this),
+            numberOfLines = (textarea.val().match(/\n/g) || []).length + 1,
+            maxRows = parseInt(textarea.attr('rows'));
+            
+            if (event.which === 13 && numberOfLines === maxRows ) {
+            return false;
+            }
+            });
+            });
+            </script>
+            
+        {% endblock %}

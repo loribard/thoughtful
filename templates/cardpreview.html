@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="full" >
+        <img src="/static/testing.jpg" height="200" ></img>
+        <table>
+            <tr>
+                <form action="/send_card" method="POST">
+                    <input type="hidden" name="sender_name" value='{{sender_name}}'>
+                    <input type="hidden" name="sender_phone" value={{sender_phone}}>
+                    <input type="hidden" name="recipient_name" value='{{recipient_name}}'>
+                    <input type="hidden" name="recipient_phone" value={{recipient_phone}}>
+                    <input type="hidden" name="message" value='{{message}}'>
+                    <input type="hidden" name="background" value={{background}}>
+                    <input type="hidden" name="styles" value={{styles}}>
+                    <input type="hidden" name="copy" value={{copy}}>
+                    <input type="hidden" name="size" value={{size}}>
+                    <input type="hidden" name="url_to_image" value={{url_to_image}}>
+                    <input class="submit" type="submit" value="Like. Please Send.">
+                </tr>
+            </form>
+            <tr>
+                <button type="button"  onclick="goBack()">Back Please.</button>
+            </tr>
+        </table>
+        <script>
+        function goBack() {
+        window.history.back();
+        }
+        </script>
+    </div>
+{% endblock %}
