@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div id="full" >
-        <img src="/static/testing.jpg" height="200" ></img>
+        <img src={{url_to_image}} height="200" ></img>
         <table>
             <tr>
                 <form action="/send_card" method="POST">

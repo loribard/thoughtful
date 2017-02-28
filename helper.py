@@ -15,10 +15,16 @@ def get_size(display_message_list):
         item = item.strip()
         if len(item) > max_length:
             max_length = len(item)
-    if max_length <= 5:
+    if max_length <= 5 and len(display_message_list)==1:
         size = "900"
-    elif max_length <= 10 and len(display_message_list) < 5:
+    elif max_length <= 5 and len(display_message_list) <=2:
+        size = "450"
+    elif max_length <= 5:
         size = "300"
+    elif max_length <= 10 and len(display_message_list) <= 3:
+        size = "400"
+    elif max_length <= 10 and len(display_message_list) <=5:
+        size = "225"
     else:
         size = "225"
 
@@ -38,10 +44,10 @@ def make_jpg(im,color,size):
     font = ImageFont.truetype("Milkshake.ttf",size)
     draw.text((35,1),message,color,spacing=0,font=font)
     im.save('testing.jpg') 
-    
-    os.chdir('/Users/loribard/src/thoughtfull/static')
-    im.save('testing.jpg')
-    os.chdir('/Users/loribard/src/thoughtfull')
+    print("IM SAVED:",im)
+    # os.chdir('/Users/loribard/src/thoughtfull/static')
+    # im.save('testing.jpg')
+    # os.chdir('/Users/loribard/src/thoughtfull')
     return im
 
 
@@ -52,6 +58,7 @@ def make_url(image):
     uploaded_images = Path("uploaded_images.txt")
     im = pyimgur.Imgur(CLIENT_ID)
     uploaded_image = im.upload_image(PATH)
+    print("UPLOADED IMAGE: ",uploaded_image.link)
     return uploaded_image.link
 
 

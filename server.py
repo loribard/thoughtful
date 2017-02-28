@@ -59,6 +59,7 @@ def process():
         message_send.write(message)
     image = make_jpg(im,color,size)
     url_to_image = make_url('testing.jpg')
+    print("URL TO IMAGE: ",url_to_image)
     return render_template('cardpreview.html', 
                            background=background,
                            sender_name=sender_name,
