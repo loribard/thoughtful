@@ -39,9 +39,9 @@ def make_jpg(im,color,size):
     draw.text((35,1),message,color,spacing=0,font=font)
     im.save('testing.jpg') 
     
-    os.chdir('/Users/loribard/src/sendacard/static')
+    os.chdir('/Users/loribard/src/thoughtfull/static')
     im.save('testing.jpg')
-    os.chdir('/Users/loribard/src/sendacard')
+    os.chdir('/Users/loribard/src/thoughtfull')
     return im
 
 
