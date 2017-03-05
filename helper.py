@@ -12,7 +12,7 @@ def make_jpg(im, color, message):
     txt = message
     fontsize = 1
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    while font.getsize(txt)[0] < im.size[0]*2.3 and font.getsize(txt)[1] < im.size[1]*2.3:
+    while font.getsize(txt)[0] < im.size[0] and font.getsize(txt)[1] < im.size[1]:
         fontsize += 1
         font = ImageFont.truetype("Milkshake.ttf", fontsize)
     fontsize -= 1
@@ -76,9 +76,10 @@ def background_process(background,):
     elif background == "clover":
         background = "/static/clover_resized.jpg"
         color = (204, 255, 179)       
-    elif background == "thanks":
-        background = "/static/thank_you_resized.jpg"
-        color = (255, 0, 0)
+    elif background == "birthday":
+        print("BIRTHDAY")
+        background = "/static/birthday_resized.jpg"
+        color = (255, 255, 255)
     im = background.replace('/static/', '')
     return (background, im, color)
 ''
