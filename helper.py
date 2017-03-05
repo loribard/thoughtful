@@ -10,25 +10,44 @@ def make_jpg(im, color, message):
     im = Image.open(im)
     draw = ImageDraw.Draw(im)
     txt = message
-    length = len(message)
     lines = message.splitlines()
     num_lines = len(lines)
+    max_length = 0
+    for line in lines:
+        length = len(line)
+        if length > max_length:
+            max_length = length
+    print("MAX LENGTH ",max_length,"NUm lines ",num_lines)
+    length = max_length
     fontsize = 1
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
     if num_lines == 1 and length <= 5:
         multiplier = 1
-        coordinates = (1, 0)
     elif num_lines == 1 and length > 5:
-        multiplier = .80
-        coordinates = (1, 0)
+        multiplier = .90
     elif num_lines == 2:
-        multiplier = 1.3
-        coordinates = (1, 0)
-    elif num_lines >= 3:
-        multiplier = 2.3
-        coordinates = (25, 1)
+        multiplier = 1.5
+    elif num_lines >= 3 and length < 10:
+        multiplier = .80
+    elif num_lines >= 3 and length < 24:
+        multiplier = 1.6
+    else:
+        multiplier = 1.8
+    if num_lines == 1:
+        coordinates = (0, 0)
+    elif num_lines == 2:
+        coordinates = (20, 1)
+    elif num_lines == 3:
+        coordinates = (20, 20)
+    elif num_lines == 4:
+        coordinates = (20, 15)
+    else:
+        coordinates = (35, 1)
+    print("multiplier ",multiplier)
+
     while font.getsize(txt)[0] < im.size[0]*multiplier and font.getsize(txt)[1] < im.size[1]*multiplier:
         fontsize += 1
+        print(font.getsize(txt),im.size[0]*multiplier,im.size[1]*multiplier,num_lines)
         font = ImageFont.truetype("Milkshake.ttf", fontsize)
     fontsize -= 1
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
