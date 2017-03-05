@@ -14,42 +14,61 @@ def make_jpg(im, color, message):
     num_lines = len(lines)
     max_length = 0
     for line in lines:
-        length = len(line)
+        length = len(line.strip())
         if length > max_length:
             max_length = length
     print("MAX LENGTH ",max_length,"NUm lines ",num_lines)
     length = max_length
     fontsize = 1
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    if num_lines == 1 and length <= 5:
-        multiplier = 1
-    elif num_lines == 1 and length > 5:
-        multiplier = .90
-    elif num_lines == 2:
-        multiplier = 1.5
-    elif num_lines >= 3 and length < 10:
-        multiplier = .5
-    elif num_lines >= 3 and length < 24:
-        multiplier = 1.6
-    else:
-        multiplier = 1.8
     if num_lines == 1:
-        coordinates = (0, 0)
+        if length <= 5:
+            fontsize = 100
+            coordinates = (20, 0)
+        elif length > 5 and length <= 10:
+            fontsize = 65
+            coordinates = (2, 25)
+        elif length > 10 and length < 15:
+            fontsize = 50
+            coordinates = (3, 50)
+        else:
+            fontsize = 20
+            coordinates = (3,50)
     elif num_lines == 2:
-        coordinates = (20, 1)
+        if length <= 5:
+            fontsize = 50
+            coordinates = (20, 0)
+        elif length > 5 and length <= 10:
+            fontsize = 65
+            coordinates = (3, 0)
+        elif length > 10 and length < 15:
+            fontsize = 50
+            coordinates = (3, 35)
+        else:
+            fontsize = 25
+            coordinates = (3,25)
     elif num_lines == 3:
-        coordinates = (20, 20)
+        if length <= 5:
+            fontsize = 50
+            coordinates = (5, 0)
+        elif length <= 10:
+            fontsize = 35
+            coordinates = (5,0)
+        else:
+            fontsize = 30
+            coordinates = (7, 15)
     elif num_lines == 4:
-        coordinates = (20, 15)
+        if length <= 10:
+            fontsize = 30
+            coordinates = (20, 0)
+        else:
+            fontsize = 25
+            coordinates = (5, 0)
     else:
-        coordinates = (35, 1)
-    print("multiplier ",multiplier)
+        fontsize = 20
+        coordinates = (5, 0)
 
-    while font.getsize(txt)[0] < im.size[0]*multiplier and font.getsize(txt)[1] < im.size[1]*multiplier:
-        fontsize += 1
-        print(font.getsize(txt),im.size[0]*multiplier,im.size[1]*multiplier,num_lines)
-        font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    fontsize -= 1
+   
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
     draw.text(coordinates, txt, color, font=font)
     im.save('testing.jpg') 
