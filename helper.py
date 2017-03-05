@@ -10,14 +10,29 @@ def make_jpg(im, color, message):
     im = Image.open(im)
     draw = ImageDraw.Draw(im)
     txt = message
+    length = len(message)
+    lines = message.splitlines()
+    num_lines = len(lines)
     fontsize = 1
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    while font.getsize(txt)[0] < im.size[0] and font.getsize(txt)[1] < im.size[1]:
+    if num_lines == 1 and length <= 5:
+        multiplier = 1
+        coordinates = (1, 0)
+    elif num_lines == 1 and length > 5:
+        multiplier = .80
+        coordinates = (1, 0)
+    elif num_lines == 2:
+        multiplier = 1.3
+        coordinates = (1, 0)
+    elif num_lines >= 3:
+        multiplier = 2.3
+        coordinates = (25, 1)
+    while font.getsize(txt)[0] < im.size[0]*multiplier and font.getsize(txt)[1] < im.size[1]*multiplier:
         fontsize += 1
         font = ImageFont.truetype("Milkshake.ttf", fontsize)
     fontsize -= 1
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    draw.text((35, 1), txt, color, font=font)
+    draw.text(coordinates, txt, color, font=font)
     im.save('testing.jpg') 
     return im
 
