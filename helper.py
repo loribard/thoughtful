@@ -28,7 +28,7 @@ def make_jpg(im, color, message):
     elif num_lines == 2:
         multiplier = 1.5
     elif num_lines >= 3 and length < 10:
-        multiplier = .80
+        multiplier = .5
     elif num_lines >= 3 and length < 24:
         multiplier = 1.6
     else:
