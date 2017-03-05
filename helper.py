@@ -3,145 +3,82 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from resizeimage import resizeimage
-from pathlib import Path
 import pyimgur
-import shutil
-import os
 
 
-def get_size(display_message_list):
-    max_length = 0
-    for item in display_message_list:
-        item = item.strip()
-        if len(item) > max_length:
-            max_length = len(item)
-    if max_length <= 5 and len(display_message_list)==1:
-        size = "900"
-    elif max_length <= 5 and len(display_message_list) <=2:
-        size = "450"
-    elif max_length <= 5:
-        size = "300"
-    elif max_length <= 10 and len(display_message_list) <= 3:
-        size = "400"
-    elif max_length <= 10 and len(display_message_list) <=5:
-        size = "225"
-    else:
-        size = "225"
-
-    print("Size: ",size,"Maximum length: ",max_length)
-    return size
-
-
-def make_jpg(im,color,size):
-   
-    with open("message.txt") as message:
-        message = message.read() 
-    print('Size',size,type(message),message)
+def make_jpg(im, color, message):
     im = Image.open(im)
     draw = ImageDraw.Draw(im)
-    size = int(int(size)/8.8)
-    print(size,type(size))
-    font = ImageFont.truetype("Milkshake.ttf",size)
-    draw.text((35,1),message,color,spacing=0,font=font)
+    txt = message
+    fontsize = 1
+    font = ImageFont.truetype("Milkshake.ttf", fontsize)
+    while font.getsize(txt)[0] < im.size[0]*2.3 and font.getsize(txt)[1] < im.size[1]*2.3:
+        fontsize += 1
+        font = ImageFont.truetype("Milkshake.ttf", fontsize)
+    fontsize -= 1
+    font = ImageFont.truetype("Milkshake.ttf", fontsize)
+    draw.text((35, 1), txt, color, font=font)
     im.save('testing.jpg') 
-    print("IM SAVED:",im)
-    # os.chdir('/Users/loribard/src/thoughtfull/static')
-    # im.save('testing.jpg')
-    # os.chdir('/Users/loribard/src/thoughtfull')
     return im
-
 
 
 def make_url(image): 
     CLIENT_ID = "ffa486c0af07526"
     PATH = "testing.jpg"
-    uploaded_images = Path("uploaded_images.txt")
     im = pyimgur.Imgur(CLIENT_ID)
     uploaded_image = im.upload_image(PATH)
-    print("UPLOADED IMAGE: ",uploaded_image.link)
     return uploaded_image.link
 
 
-
 def image_sizing(im):
-    fd_img = open(im,'r')
+    fd_img = open(im, 'r')
     img = Image.open(fd_img)
-    img = resizeimage.resize_thumbnail(img,[500,500])
-    img.save(im,img.format)
+    img = resizeimage.resize_thumbnail(img, [500, 500])
+    img.save(im, img.format)
     width, height = img.size
-    print(width,height)
+    print(width, height)
     fd_img.close()
     return im
 
-def process_display_message_list(display_message_list):
-    for j in range(len(display_message_list)):
-        if display_message_list[j] == "":
-            display_message_list[j] == "&nbsp;"                    
-        else:
-            new_item = ''         
-            for i in range(len(display_message_list[j]) - 1):
-                if display_message_list[j][i] == ' ' and display_message_list[j][i+1] == ' ':
-                    new_item += "&nbsp;"
-                else:
-                    new_item += display_message_list[j][i]   
-            new_item += display_message_list[j][-1]
-            display_message_list[j] = new_item
-    return display_message_list
 
-def background_process(background,size):
+def background_process(background,):
 
     if background == "floral":
         background = "/static/floral-fabric-background-pattern_resized.jpg"
-        color = (255,102,0)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (0, 102, 0)
     elif background == "paisley":
         background = "/static/paisley_resized.jpg"
-        color = (102,0,102)
-        style = "color:rgb" + str(color)+";font-size:"+ size + "px;margin-left:0.3em;"
+        color = (102, 0, 102)
     elif background == "sorry":
         background = "/static/yellow_roses_resized.png"
-        color = (0,102,0)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (0, 102, 0)
     elif background == "spider":
         background = "/static/spider_web_resized.jpg"
-        color = (242,242,242)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (242, 242, 242)      
     elif background == "snow":
         background = "/static/snow_resized.jpg"
-        print("BACKGROUND",background)
-        color = (51,60,73)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (51, 60, 73)       
     elif background == "blues":
         background = "/static/blues_resized.jpg"
-        color = (66,209,244)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;"
+        color = (66, 209, 244)       
     elif background == "marble":
         background = "/static/marble_resized.jpg"
-        color = (242,242,242)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (242, 242, 242)       
     elif background == "oldworld":
         background = "/static/old_world_resized.jpg"
-        color = (99,77,20)
-        style = "color:rgb" + str(color)+";font-size:"+ size + "px;margin-left:0.3em;"
+        color = (99, 77, 20)        
     elif background == "dots":
         background = "/static/dots_resized.png"
-        color = (66,243,255)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (0, 153, 255)       
     elif background == "waves":
         background = "/static/waves_resized.jpg"
-        color = (230,230,255)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (230, 230, 255)
     elif background == "clover":
         background = "/static/clover_resized.jpg"
-        color = (204,255,179)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;margin-left:0.3em;"
+        color = (204, 255, 179)       
     elif background == "thanks":
         background = "/static/thank_you_resized.jpg"
-        color = (255,0,0)
-        style = "color:rgb" + str(color) + ";font-size:" + size + "px;"
-    print("BACKGROUND BEFORE STRIP",background)
-    im = background.replace('/static/','')
-    print("IM IN HELPER", im)
-
-    return (background, style, im, color)
+        color = (255, 0, 0)
+    im = background.replace('/static/', '')
+    return (background, im, color)
 ''
