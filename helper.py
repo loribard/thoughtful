@@ -1,4 +1,5 @@
 
+import PIL
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -8,69 +9,17 @@ import pyimgur
 
 def make_jpg(im, color, message):
     im = Image.open(im)
+    fontsize = 40
+    font = ImageFont.truetype("Milkshake.ttf", fontsize)
+    img = Image.new("RGBA", (1, 1))
+    draw = ImageDraw.Draw(img)
+    textsize = draw.textsize(message, font)
+    A = textsize[0] + 20
+    B = textsize[1] + 20
+    textsize = (A, B)
+    im = im.resize(textsize, PIL.Image.ANTIALIAS)    
     draw = ImageDraw.Draw(im)
-    txt = message
-    lines = message.splitlines()
-    num_lines = len(lines)
-    max_length = 0
-    for line in lines:
-        length = len(line.strip())
-        if length > max_length:
-            max_length = length
-    print("MAX LENGTH ",max_length,"NUm lines ",num_lines)
-    length = max_length
-    fontsize = 1
-    font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    if num_lines == 1:
-        if length <= 5:
-            fontsize = 100
-            coordinates = (20, 0)
-        elif length > 5 and length <= 10:
-            fontsize = 65
-            coordinates = (2, 25)
-        elif length > 10 and length < 15:
-            fontsize = 50
-            coordinates = (3, 50)
-        else:
-            fontsize = 20
-            coordinates = (3,50)
-    elif num_lines == 2:
-        if length <= 5:
-            fontsize = 50
-            coordinates = (20, 0)
-        elif length > 5 and length <= 10:
-            fontsize = 65
-            coordinates = (3, 0)
-        elif length > 10 and length < 15:
-            fontsize = 50
-            coordinates = (3, 35)
-        else:
-            fontsize = 25
-            coordinates = (3,25)
-    elif num_lines == 3:
-        if length <= 5:
-            fontsize = 50
-            coordinates = (5, 0)
-        elif length <= 10:
-            fontsize = 35
-            coordinates = (5,0)
-        else:
-            fontsize = 30
-            coordinates = (7, 15)
-    elif num_lines == 4:
-        if length <= 10:
-            fontsize = 30
-            coordinates = (20, 0)
-        else:
-            fontsize = 25
-            coordinates = (5, 0)
-    else:
-        fontsize = 20
-        coordinates = (5, 0)
-
-   
-    font = ImageFont.truetype("Milkshake.ttf", fontsize)
-    draw.text(coordinates, txt, color, font=font)
+    draw.text((0, 0), message, color, font)
     im.save('testing.jpg') 
     return im
 
