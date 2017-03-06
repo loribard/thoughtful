@@ -8,18 +8,30 @@ import pyimgur
 
 
 def make_jpg(im, color, message):
+    lines = message.splitlines()
+    max_length = 0
+    for line in lines:
+        if len(line.strip()) > max_length:
+            max_length = len(line.strip())
     im = Image.open(im)
     fontsize = 40
     font = ImageFont.truetype("Milkshake.ttf", fontsize)
     img = Image.new("RGBA", (1, 1))
     draw = ImageDraw.Draw(img)
     textsize = draw.textsize(message, font)
-    A = textsize[0] + 20
-    B = textsize[1] + 20
+    A = textsize[0] + 30
+    B = textsize[1] + 30
     textsize = (A, B)
     im = im.resize(textsize, PIL.Image.ANTIALIAS)    
     draw = ImageDraw.Draw(im)
-    draw.text((0, 0), message, color, font)
+    if max_length <= 5:
+        coordinates = (6, 1)
+    elif max_length <= 10:
+        coordinates = (10, 5)
+    else:
+        coordinates = (20, 20)
+
+    draw.text(coordinates, message, color, font)
     im.save('testing.jpg') 
     return im
 
